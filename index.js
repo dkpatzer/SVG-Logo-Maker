@@ -1,4 +1,5 @@
-
+const { generateLogo } = require('./logoGenerator');
+const inquirer = require('inquirer')
 const inquirer = require('inquirer');
 const { generateLogo } = require('./lib/logoGenerator');
 
