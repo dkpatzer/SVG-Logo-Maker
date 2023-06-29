@@ -1,97 +1,127 @@
-// Inquirer (node package manager) import
-const inquirer = require("inquirer");
+// initialize variables
+const fs = require('fs'),
+      inquirer = require('inquirer'),
+      generate = require('./lib/logoGenerator.js');
 
-// File system module (node package manager) import
-const fs = require("fs");
-
-// Importing classes from ./lib/shapes directory
-const { Triangle, Square, Circle } = require("./lib/shapes");
-
-// Function writes the SVG file using user answers from inquirer prompts
-function writeToFile(fileName, answers) {
-  // File starts as an empty string
-  let svgString = "";
-  // Sets width and height of logo container
-  svgString =
-    '<svg version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg">';
-  // <g> tag wraps <text> tag so that user font input layers on top of polygon -> not behind
-  svgString += "<g>";
-  // Takes user input for shape choice and inserts it into SVG file
-  svgString += `${answers.shape}`;
-
-  // Conditional check takes users input from choices array and then adds polygon properties and shape color to SVG string
-  let shapeChoice;
-  if (answers.shape === "Triangle") {
-    shapeChoice = new Triangle();
-    svgString += `<polygon points="150, 18 244, 182 56, 182" fill="${answers.shapeBackgroundColor}"/>`;
-  } else if (answers.shape === "Square") {
-    shapeChoice = new Square();
-    svgString += `<rect x="73" y="40" width="160" height="160" fill="${answers.shapeBackgroundColor}"/>`;
-  } else {
-    shapeChoice = new Circle();
-    svgString += `<circle cx="150" cy="115" r="80" fill="${answers.shapeBackgroundColor}"/>`;
-  }
-
-  // <text> tag gives rise to text alignment, text-content/text-color taken in from user prompt and gives default font size of "40"
-  svgString += `<text x="150" y="130" text-anchor="middle" font-size="40" fill="${answers.textColor}">${answers.text}</text>`;
-  // Closing </g> tag
-  svgString += "</g>";
-  // Closing </svg> tag
-  svgString += "</svg>";
-
-  // Using file system module to generate svg file, takes in file name given in the promptUser function, the svg string, and a ternary operator which handles logging any errors, or a "Generated logo.svg" message to the console  
-  fs.writeFile(fileName, svgString, (err) => {
-    err ? console.log(err) : console.log("Generated logo.svg");
-  });
-}
-
-// This function utilizes inquirer .prompt to prompt the user to answer questions in the command line and save user input
-function promptUser() {
-  inquirer
-    .prompt([
-      // Text prompt
-      {
-        type: "input",
-        message:
-          "What text would you like you logo to display? (Enter up to three characters)",
-        name: "text",
-      },
-      // Text color prompt
-      {
-        type: "input",
-        message:
-          "Choose text color (Enter color keyword OR a hexadecimal number)",
-        name: "textColor",
-      },
-      // Shape choice prompt
-      {
-        type: "list",
-        message: "What shape would you like the logo to render?",
-        choices: ["Triangle", "Square", "Circle"],
-        name: "shape",
-      },
-      // Shape color prompt
-      {
-        type: "input",
-        message:
-          "Choose shapes color (Enter color keyword OR a hexadecimal number)",
-        name: "shapeBackgroundColor",
-      },
+// Create the prompts
+const userInput = () => {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'title',
+            message: 'Please enter up to three characters for the logo text.',
+            validate: validateCharacters // validate the input is not greater than 3
+        },
+        {
+            type: 'input',
+            name: 'titleColor',
+            message: 'Please enter a color keyword or hexidecimal number (excluding #) for the color of the text.',
+            validate: validateColor // validate the input is a color keyword or valid hexidecimal
+        },
+        {
+            type: 'list',
+            name: 'shape',
+            message: 'What shape would you like to use?',
+            choices: ['circle','triangle','square'],
+            default: 'circle',
+            validate: validateInput // validate the input is not empty
+        },
+        {
+            type: 'input',
+            name: 'shapeColor',
+            message: 'Please enter a color keyword or hexidecimal number (excluding #) for the color of the shape.',
+            validate: validateColor // validate the input is a color keyword or valid hexidecimal
+        }
     ])
-    .then((answers) => {
-      // Error handling for text prompt (user must enter 3 characters or less for logo to generate)
-      if (answers.text.length > 3) {
-        console.log("Must enter a value of no more than 3 characters");
-        promptUser();
-      } else {
-        // Calling write file function to generate SVG file
-        writeToFile("logo.svg", answers);
-      }
+};
+
+/**
+ * @validateCharacters
+ * Ensures the input is less than or
+ * equal to three characters
+ */
+const validateCharacters = async (input) => {
+    // if input is valid, return true
+    if (input.length <= 3) {
+        return true;
+    } 
+    // else display a message to the user
+    return 'Please enter three characters or less.';
+};
+
+/**
+ * @validateColor
+ * Ensures the color is a valid
+ * color keyword OR a valid 
+ * hexidecimal number (3 or 6 characters)
+ */
+const validateColor = async (color) => {
+    // initialize variables
+    let hexRegex = /^[a-fA-F0-9]{6}$|^[a-fA-F0-9]{3}$/,
+        keywordRegex = /^(aliceblue|antiquewhite|aqua|aquamarine|azure|beige|bisque|black|blanchedalmond|blue|blueviolet|brown|burlywood|cadetblue|chartreuse|chocolate|coral|cornflowerblue|cornsilk|crimson|cyan|darkblue|darkcyan|darkgoldenrod|darkgray|darkgrey|darkgreen|darkkhaki|darkmagenta|darkolivegreen|darkorange|darkorchid|darkred|darksalmon|darkseagreen|darkslateblue|darkslategray|darkslategrey|darkturquoise|darkviolet|deeppink|deepskyblue|dimgray|dimgrey|dodgerblue|firebrick|floralwhite|forestgreen|fuchsia|gainsboro|ghostwhite|gold|goldenrod|gray|grey|green|greenyellow|honeydew|hotpink|indianred|indigo|ivory|khaki|lavender|lavenderblush|lawngreen|lemonchiffon|lightblue|lightcoral|lightcyan|lightgoldenrodyellow|lightgray|lightgrey|lightgreen|lightpink|lightsalmon|lightseagreen|lightskyblue|lightslategray|lightslategrey|lightsteelblue|lightyellow|lime|limegreen|linen|maroon|mediumaquamarine|mediumblue|mediumorchid|mediumpurple|mediumseagreen|mediumslateblue|mediumspringgreen|mediumturquoise|mediumvioletred|midnightblue|mintcream|mistyrose|moccasin|navajowhite|navy|oldlace|olive|olivedrab|orange|orangered|orchid|palegoldenrod|palegreen|paleturquoise|palevioletred|papayawhip|peachpuff|peru|pink|plum|powderblue|purple|rebeccapurple|red|rosybrown|royalblue|saddlebrown|salmon|sandybrown|seagreen|seashell|sienna|silver|skyblue|slateblue|slategray|slategrey|snow|springgreen|steelblue|tan|teal|thistle|tomato|turquoise|violet|wheat|white|whitesmoke|yellow|yellowgreen)$/i;
+    // if it is a valid hexadecimal color, return true
+    if (hexRegex.test(color)) {
+        return true;
+    } 
+    // else if it is a valid color keyword, return true
+    else if (keywordRegex.test(color.toLowerCase())) {
+        return true;
+    }
+    // else display a message to the user
+    return 'Please enter a valid color keyword or hexidecimal number.';
+};
+
+/**
+ * @validateInput
+ * Ensures the user has entered something
+ */
+const validateInput = async (input) => {
+    // if user has entered data, return true
+    if (input) {
+        return true;
+    } 
+    // else display a message to the user
+    return 'You must enter the information.';
+};
+
+/**
+ * @writeToFile
+ * Writes the SVG data to a file
+ */
+function writeToFile(fileName, data) {
+    // write data to file
+    fs.writeFile(fileName, data, (err) => {
+        // if error, show error in console log
+        if (err) {
+            console.error(err);
+        }
+        // console log a success message 
+        else {
+            console.log('Generated logo.svg');
+        }
     });
 }
 
-// Calling promptUser function so inquirer prompts fire off when application is ran
-promptUser();
+/**
+ * @init
+ * Runs on app load
+ */
+function init() {
+    // get the data from the prompts
+    userInput().then(res => {
+        // pass the responses to the generate.js file to create the SVG
+        return generate(res);
+    }).then(data => {
+        // pass the returned data to the @writeToFile function
+        return writeToFile("logo.svg", data);
+    }).catch(err => {
+        // console log the error
+        console.log("Error: " + err)
+    });
+}
+
+// initialize the application
+init();
 
 
 
