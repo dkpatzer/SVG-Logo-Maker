@@ -1,7 +1,7 @@
 // initialize variables
 const fs = require('fs'),
       inquirer = require('inquirer'),
-      generate = require('./lib/logoGenerator.js');
+      generate = require('./lib/logoGenerator');
 
 // Create the prompts
 const userInput = () => {
@@ -109,16 +109,16 @@ function writeToFile(fileName, data) {
 function init() {
     // get the data from the prompts
     userInput().then(res => {
-        // pass the responses to the generate.js file to create the SVG
-        return generate(res);
-    }).then(data => {
-        // pass the returned data to the @writeToFile function
-        return writeToFile("logo.svg", data);
+      // pass the responses to the generateLogo function to create the SVG
+      generateLogo(res.title, res.titleColor, res.shape, res.shapeColor);
     }).catch(err => {
-        // console log the error
-        console.log("Error: " + err)
+      // console log the error
+      console.log("Error: " + err);
     });
-}
+  }
+  
+
+  
 
 // initialize the application
 init();
