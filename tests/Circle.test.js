@@ -1,12 +1,16 @@
-const Circle = require('../lib/shapes/Circle');
+// declares the circle class
+const circle = require('../lib/circle.js');
 
+.
 describe('Circle', () => {
-  test('renders SVG with the given color', () => {
-    const color = 'blue';
-    const circle = new Circle(color);
-    const expectedSVG = `<svg width="100" height="100">
-                          <circle cx="50" cy="50" r="50" fill="${color}" />
-                        </svg>`;
-    expect(circle.render()).toEqual(expectedSVG);
+  // A test is created to check that the color of the circle comes back the color entered.
+  describe('render', () => {
+    it('should  render the circle shape color', () => {
+        const newCircle = new circle;
+        newCircle.shapeColor = "red"
+        const renderString = '<circle cx="150" cy="100" r="80" fill="red" />'
+
+      expect(newCircle.render()).toEqual(renderString);
+    });
   });
 });
