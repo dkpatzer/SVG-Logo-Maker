@@ -1,6 +1,6 @@
 
 const inquirer = require('inquirer');
-const generateSVG = require('./utils/generateSVG')
+const generateSVG = require('./utils/logoGenerator.js')
 const fs = require('fs')
 
 //questions array. For the first question I limit the number of characters
