@@ -1,36 +1,37 @@
-const fs = require('fs');
-const shapes = require('./shapes/shapes');
-const { Circle, Triangle, Square } = require('./shapes/shapes');
+const shapes = require("../lib/shapes.js")
+const circle = require("../lib/circle.js")
+const triangle = require("../lib/triangle.js")
+const square = require("../lib/square")
 
 
-function generateLogo(text, textColor, shapeType, shapeColor) {
-  let shape;
+// this funtion takes in the data from the user and generates the svg code
+const generateSVG = (data) => {
+   let newStr = ""
+   const newShape = new shapes
+   newStr = newShape.render();
 
-  switch (shapeType) {
-    case 'circle':
-      shape = new Circle(50, shapeColor);
-      break;
-    case 'triangle':
-      shape = new Triangle(50, shapeColor);
-      break;
-    case 'square':
-      shape = new Square(50, shapeColor);
-      break;
-    default:
-      throw new Error('Invalid shape type.');
-  }
 
-  const logo = `<svg width="300" height="200">
-                  <text x="50%" y="50%" text-anchor="middle" fill="${textColor}">${text}</text>
-                  ${shape.draw()}
-                </svg>`;
+      switch(data.shape){
+         case 'Circle':
+            const newCircle = new circle(data.text, data.textColor, data.shapeColor)
+            newStr += `\n     ${newCircle.render()}\n     ${newCircle.renderBottom()}`
+            break;
 
-  fs.writeFile('logo.svg', logo, (err) => {
-    if (err) throw err;
-    console.log('Generated logo.svg');
-  });
+         case 'Triangle':
+            const newTriangle = new triangle(data.text, data.textColor, data.shapeColor);
+            newStr += `\n     ${newTriangle.render()}\n   ${newTriangle.renderBottom()}`;
+            break;
+         case 'Square':
+            const newSquare = new square(data.text, data.textColor, data.shapeColor);
+            newStr += `\n     ${newSquare.render()}\n     ${newSquare.renderBottom()}`;
+            break;
+
+
+      }
+      return newStr;
 }
 
-module.exports = {
-  generateLogo
-};
+module.exports = generateSVG
+
+
+

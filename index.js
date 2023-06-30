@@ -38,17 +38,21 @@ const questions = [
 ]
 
 inquirer
-    .prompt(questions).then((data) => {
-        fs.writeFile('./examples/logo.svg',generateSVG(data), (err) => {
-            if(err){
-                console.log(err);
-            }
-            else{
-                console.log('Generated logo.svg')
+  .prompt(questions)
+  .then((data) => {
+    const shapeType = data.shape.toLowerCase(); // Convert shape type to lowercase
 
-            }
-           })
-    })
+    fs.writeFile('./examples/logo.svg', generateSVG(data.text, data.textColor, shapeType, data.shapeColor), (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Generated logo.svg');
+      }
+    });
+  });
+
+
+    
 
 
 
