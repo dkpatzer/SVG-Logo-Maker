@@ -58,10 +58,15 @@ The test file contains tests for the rendering functionality of the shapes. It u
 For a user with the entire solved app, run npm install. Then run node.index.js as many times as desired to created SVG files. The logo.svg files will be saved and stored in the examples folder.
 
 
-![Screenshot of pink logo](https://github.com/dkpatzer/SVG-Logo-Maker/blob/main/images/Screenshot%20(169).png)
+![Screenshot of pink logo](./Assets/images/Screenshot%20(169).png)
 
-![Screenshot of blue logo](https://github.com/dkpatzer/SVG-Logo-Maker/blob/main/images/Screenshot%20(170).png)
+![Screenshot of blue logo](./Assets/images/Screenshot%20(170).png)
+
    
+## Llink to Screencastify video
+
+https://watch.screencastify.com/v/9IlS2C8sMwx90pUiXxHA
+
 
 ## Credits
 
