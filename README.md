@@ -33,13 +33,14 @@ The files collectively solve the problem of generating an SVG logo based on user
 
 
 
-## Table of Contents (Optional)
+## Table of Contents 
 
-- [Installation](#SVG-Logo-Maker)
-- [Description](#Description)
-- [Usage](#usage)
+- [description](#description)
+- [installation](#installation)
+- [Usage](#usage) 
+- [Link to Screencastify video](#link-to-screencastify-video)
 - [Credits](#credits)
-- [License](#license)
+
 
 ## Installation
 First I made the file structure and added modules to the gitignore file. Next run npm install. After achieving an ability to get at least one questioned answered when running node index.js I began running occasional tests by running npm test.
@@ -70,32 +71,56 @@ https://watch.screencastify.com/v/9IlS2C8sMwx90pUiXxHA
 
 ## Credits
 
-List your collaborators, if any, with links to their GitHub profiles.
+The SVG Logo Maker App was developed by David Patzer as part of the NU coding bootcamp. 
 
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
 
-If you followed tutorials, include links to those here as well.
+I obtained information from many sources: 
 
-## License
+- The Jest documentation: https://jestjs.io/
 
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
+- w3collective: https://www.w3.org/Graphics/SVG/
 
----
+- https://en.wikipedia.org/wiki/SVG: For SVG information and examples.
 
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
+- https://marketplace.visualstudio.com/items?itemName=jock.svg
 
-## Badges
+- https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial
 
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
+- https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Basic_Shapes
 
-Badges aren't necessary, per se, but they demonstrate street cred. Badges let other developers know that you know what you're doing. Check out the badges hosted by [shields.io](https://shields.io/). You may not understand what they all represent now, but you will in time.
+- https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Texts
 
-## Features
+- https://marketplace.visualstudio.com/items?itemName=jock.svg
 
-If your project has a lot of features, list them here.
+- http://techslides.com/save-svg-as-an-image
 
-## How to Contribute
+- http://www.kevlindev.com/tutorials/basics/shapes/js_dom/index.htm
 
-If you created an application or package and would like other developers to contribute it, you can include guidelines for how to do so. The [Contributor Covenant](https://www.contributor-covenant.org/) is an industry standard, but you can always write your own if you'd prefer.
+- https://www.educative.io/blog/object-oriented-programming
 
-## Tests
+- https://www.npmjs.com/package/dotenv
+
+- Stack Overflow: For the community's invaluable insights and solutions.
+
+- https://chat.openai.com/: For text verification and assistance.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
