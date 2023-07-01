@@ -1,20 +1,23 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const {Shape,Circle, Triangle, Square} = require('./lib/shapes');
+const { Shape, Circle, Triangle, Square } = require('./lib/shapes');
 
 class Svg {
-  constructor(){
-    this.textElement =''
-    this.shapeElement =''
+  constructor() {
+    this.textElement = '';
+    this.shapeElement = '';
   }
-  render(){
-    return `version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg"`
+
+  render() {
+    return `version="1.1" width="300" height="200" xmlns="http://www.w3.org/2000/svg"`;
   }
-  setText(text,color){
-    this.textElement= ` <text x="150" y="125" font-size="60" text-anchor="middle" fill=${color}>${text}</text>`
+
+  setText(text, color) {
+    this.textElement = ` <text x="150" y="125" font-size="60" text-anchor="middle" fill="${color}">${text}</text>`;
   }
-  setShapeElement(shape){
-    this.shapeElement = shape.render()
+
+  setShapeElement(shape) {
+    this.shapeElement = shape.render();
   }
 }
 
@@ -45,12 +48,10 @@ const questions = [
   },
 ];
 
-
-function writeToFile(fileName, data) {
-  const folderPath = './examples/'
+function generateLogo(data) {
   const svg = new Svg();
   svg.setText(data.text, data.textColor);
-  
+
   switch (data.shape) {
     case 'circle':
       svg.setShapeElement(new Circle(data.shapeColor));
@@ -65,26 +66,21 @@ function writeToFile(fileName, data) {
       console.error(`Invalid shape selected: ${data.shape}`);
       return;
   }
-  
+
   const svgContent = `<svg ${svg.render()}>${svg.shapeElement}${svg.textElement}</svg>`;
 
-  
-  fs.writeFile(folderPath + fileName, svgContent, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log('Logo generated successfully!');
-    }
-  });
-};
+  console.log(svgContent);
 
-// TODO: Create a function to initialize app
+  fs.writeFileSync('./examples/logo.svg', svgContent);
+}
+
 function init() {
   inquirer.prompt(questions).then((answers) => {
-    console.log(answers);
-    writeToFile('logo.svg', answers);
+    generateLogo(answers);
   });
-};
+}
 
-// // Function call to initialize app
 init();
+
+
+

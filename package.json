@@ -1,15 +1,21 @@
 {
   "name": "svg-logo-maker",
   "version": "1.0.0",
-  "description": "Makes custom SVG logos",
+  "description": "## Your Task",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest"   
   },
+
+  "keywords": [
+
+  ],
+
+  "author": "__",
+  "license": "ISC",
+
   "dependencies": {
-    "inquirer": "^8.2.5"
-  },
-  "devDependencies": {
+    "inquirer": "^8.2.5",
     "jest": "^29.5.0"
   }
 }
